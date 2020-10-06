@@ -18,53 +18,27 @@ public class Server {
     }
 
     //metodi
-    public Socket attendi() {
+    public void power_up() {
         try {
-            System.out.println("1 SERVER partito in esecuzione ...");
+            ServerSocket serverSocket = new ServerSocket(serverPort);
 
-            server = new ServerSocket(serverPort);
-
-            client = server.accept();
-
-            server.close();
-
-            inFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            outToClient = new DataOutputStream(client.getOutputStream());
+            for(;;) {
+                System.out.println("1 Server in attesa ...");
+                Socket socket = serverSocket.accept();
+                System.out.println("3 Server socket " + socket);
+                ServerThread serverThread = new ServerThread(socket);
+                serverThread.start();
+            }
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Errore durante l'istanza del server!");
-            System.exit(1);
-        }
-
-        return client;
-    }
-    public void comunica() {
-        try {
-            System.out.println("3 benvenuto client, scrivi una frase e la trasformo in maiuscolo.\n" +
-                    "Attendo ...");
-            stringFromUser = inFromClient.readLine();
-            System.out.println("6 ricevuta la stringa dal client: " + stringFromUser);
-
-            stringReworked = stringFromUser.toUpperCase();
-            System.out.println("7 invio la stringa modificata al client ...");
-            outToClient.writeBytes(stringReworked + "\n");
-
-            System.out.println("9 SERVER: fine elaborazione ... buona notte!");
-            client.close();
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Errore durante la risposta del server!");
+            System.out.println("Errore durante l'istanza de server!");
             System.exit(1);
         }
     }
     //main
     public static void main(String[] args) {
         Server server = new Server("127.0.0.1", 6789);
-        while (true) {
-            server.attendi();
-            server.comunica();
-        }
+        server.power_up();
     }
 }
