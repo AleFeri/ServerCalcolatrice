@@ -19,7 +19,7 @@ public class Client {
 
     //metodi
     public Socket connetti() {
-        System.out.println("2 CLIENT partito in esecuzione ...");
+        System.out.println("CLIENT in esecuzione ...");
         try {
             keyboard = new BufferedReader(new InputStreamReader(System.in));
             mySocket = new Socket(serverName, serverPort);
@@ -38,19 +38,18 @@ public class Client {
         return mySocket;
     }
     public void comunica() {
-        for (; ; ) {
+        for (;;) {
             try {
-                System.out.println("4 ... utente inserisci una stringa da trasmetere al server:");
+                System.out.println("Inserisci l'operzione da eseguire:");
                 userString = keyboard.readLine();
 
-                System.out.println("5 ... invio la stringa al server e attendo ...");
                 outToServer.writeBytes(userString + '\n');
 
                 stringFormServer = inFromServer.readLine();
-                System.out.println("7 ... risposta dal server:\n" + stringFormServer);
+                System.out.println("Risposta:\n" + stringFormServer);
 
                 if (userString.equals("FINE")) {
-                    System.out.println("8 CLIENT: termina elaborazione e chiude connessione");
+                    System.out.println("Connessione chiusa!");
                     mySocket.close();
                     break;
                 }

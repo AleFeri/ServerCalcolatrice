@@ -23,9 +23,9 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(serverPort);
 
             for(;;) {
-                System.out.println("1 Server in attesa ...");
+                System.out.println("Server in attesa ...");
                 Socket socket = serverSocket.accept();
-                System.out.println("3 Server socket " + socket);
+                System.out.println("Server socket " + socket);
                 ServerThread serverThread = new ServerThread(socket);
                 serverThread.start();
             }
