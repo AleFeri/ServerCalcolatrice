@@ -2,14 +2,13 @@ import java.io.*;
 import java.net.*;
 
 class ServerThread extends Thread {
-    ServerSocket server = null;
-    Socket client = null;
+    Socket client;
     String stringFromUser = null;
     String stringReworked = null;
     BufferedReader inFromClient;
     DataOutputStream outToClient;
 
-    //Costruttore
+    //costruttore
     public ServerThread(Socket socket) {
         this.client = socket;
     }
@@ -53,17 +52,17 @@ class ServerThread extends Thread {
         else if (operation.indexOf("-") != -1) {
             int n1 = Integer.parseInt(operation.substring(0, operation.indexOf("-")));
             int n2 = Integer.parseInt(operation.substring(operation.indexOf("-") + 1));
-            result = n1 + n2;
+            result = n1 - n2;
         }
         else if (operation.indexOf("*") != -1) {
             int n1 = Integer.parseInt(operation.substring(0, operation.indexOf("*")));
             int n2 = Integer.parseInt(operation.substring(operation.indexOf("*") + 1));
-            result = n1 + n2;
+            result = n1*n2;
         }
         else if (operation.indexOf("/") != -1) {
             int n1 = Integer.parseInt(operation.substring(0, operation.indexOf("/")));
             int n2 = Integer.parseInt(operation.substring(operation.indexOf("/") + 1));
-            result = n1 + n2;
+            result = n1/n2;
         }
 
         return "" + result;

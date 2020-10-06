@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class Server {
     String serverName = "[SERVER NAME]";
@@ -21,13 +23,20 @@ public class Server {
     public void power_up() {
         try {
             ServerSocket serverSocket = new ServerSocket(serverPort);
+            Executor executor = Executors.newFixedThreadPool(1);
 
             for(;;) {
+                /*
                 System.out.println("Server in attesa ...");
                 Socket socket = serverSocket.accept();
                 System.out.println("Server socket " + socket);
                 ServerThread serverThread = new ServerThread(socket);
                 serverThread.start();
+                 */
+                System.out.println("Server in attesa ...");
+                Socket socket = serverSocket.accept();
+                System.out.println("Server socket " + socket);
+                executor.execute(new ServerThread(socket));
             }
         }
         catch (Exception e) {
@@ -38,7 +47,7 @@ public class Server {
     }
     //main
     public static void main(String[] args) {
-        Server server = new Server("127.0.0.1", 6789);
+        Server server = new Server("127.0.0.1", 6555);
         server.power_up();
     }
 }

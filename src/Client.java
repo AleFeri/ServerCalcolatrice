@@ -63,7 +63,7 @@ public class Client {
 
     //main
     public static void main(String[] args) {
-        Client client = new Client("127.0.0.1", 6789);
+        Client client = new Client("127.0.0.1", 6555);
         client.connetti();
         client.comunica();
     }
